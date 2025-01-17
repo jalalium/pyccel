@@ -30,10 +30,11 @@ if __name__ == '__main__':
         for l in review_stage_labels:
             subprocess.run([github_cli, 'pr', 'edit', pr_id, '--remove-label', l], check=False)
     elif decision == 'approved':
-        p = subprocess.run([github_cli, 'pr', 'view', pr_id, '--json', 'headRepositoryOwner',
-            '--jq', '.["headRepositoryOwner"]["login"]'], check=True, capture_output=True,
-            text=True)
-        if p.stdout == 'pyccel':
+        p = subprocess.run([github_cli, 'pr', 'view', pr_id, '--json', 'headRepositoryOwner,headRepository'],
+                check=True, capture_output=True, text=True)
+        repo_info = json.loads(p.stdout)
+        repo = f"{repo_info['headRepositoryOwner']['login']}/{repo_info['headRepository']['login']}"
+        if p.stdout == 'pyccel/pyccel':
             bot = Bot(pr_id = pr_id)
             bot.mark_as_ready(following_review = True)
         else:
