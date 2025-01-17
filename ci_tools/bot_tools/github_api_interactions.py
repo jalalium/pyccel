@@ -21,7 +21,7 @@ def get_authorization():
     str
         A string describing the expiration of the JWT.
     """
-    signing_key = jwt.jwk_from_pem(bytes(os.environ["PEM"], "utf-8"))
+    signing_key = jwt.jwk_from_pem(bytes(os.environ["BOT_PEM"], "utf-8"))
     # Issued at time
     # JWT expiration time (10 minutes maximum)
     # GitHub App's identifier
@@ -32,7 +32,7 @@ def get_authorization():
     headers = {"Accept": "application/vnd.github+json", "Authorization": f"Bearer {jw_token}", "X-GitHub-Api-Version": "2022-11-28"}
 
     # Create JWT
-    reply = requests.post("https://api.github.com/app/installations/39885334/access_tokens", headers=headers)
+    reply = requests.post("https://api.github.com/app/installations/337566/access_tokens", headers=headers)
 
     print(reply.text)
 
