@@ -23,10 +23,12 @@ if __name__ == '__main__':
     if decision == 'changes_requested':
         author = event['pull_request']['user']['login']
         reviewer = event['review']['user']['login']
-        subprocess.run([github_cli, 'pr', 'ready', pr_id, '--undo'], check=False)
+        subprocess.run([github_cli, 'pr', 'ready', pr_id, '--undo'], check=False, text=True, capture_output=True)
+        print(p.stderr)
         subprocess.run([github_cli, 'pr', 'comment', pr_id, '--body',
             message_from_file('set_draft_changes.txt').format(author=author, reviewer=reviewer)],
-            check=True)
+            check=False, text=True, capture_output=True)
+        print(p.stderr)
         for l in review_stage_labels:
             subprocess.run([github_cli, 'pr', 'edit', pr_id, '--remove-label', l], check=False)
     elif decision == 'approved':
