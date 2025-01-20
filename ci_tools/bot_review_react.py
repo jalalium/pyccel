@@ -25,7 +25,7 @@ if __name__ == '__main__':
         reviewer = event['review']['user']['login']
         p = subprocess.run([github_cli, 'pr', 'ready', pr_id, '--undo'], check=False, text=True, capture_output=True)
         print(p.stderr)
-        subprocess.run([github_cli, 'pr', 'comment', pr_id, '--body',
+        p = subprocess.run([github_cli, 'pr', 'comment', pr_id, '--body',
             message_from_file('set_draft_changes.txt').format(author=author, reviewer=reviewer)],
             check=False, text=True, capture_output=True)
         print(p.stderr)
