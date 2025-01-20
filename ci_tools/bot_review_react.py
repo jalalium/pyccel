@@ -16,7 +16,7 @@ if __name__ == '__main__':
     # If bot called explicitly (comment event)
 
     # Collect id from a pull_request_review event with a created action
-    pr_id = event['pull_request']['number']
+    pr_id = str(event['pull_request']['number'])
 
     decision = event['review']['state']
 
