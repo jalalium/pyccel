@@ -8,6 +8,8 @@ jobs:
   Bot:
     name: Update Review Stage
     if: github.event.review.user.type != 'Bot'
+    permissions:
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
